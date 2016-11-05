@@ -183,3 +183,5 @@ def postorder root
 
   result
 end
+
+# 2 pointers for O(1) space (with parent metadata)
