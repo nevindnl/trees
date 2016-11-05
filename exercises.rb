@@ -47,17 +47,21 @@ end
 
 
 # (binary)
+
+# dfs is preorder traversal
+
 def dfs root, target
   return root if root.value == target
 
   dfs(root.left) || dfs(root.right)
 end
 
+# with current
 def dfs root, target
   nodes = []
   current = root
 
-  until nodes.empty?
+  until nodes.empty? && current.nil?
     if current
       return current if current.value == target
 
@@ -67,6 +71,20 @@ def dfs root, target
       current = nodes.pop
       current = current.right
     end
+  end
+
+  nil
+end
+
+# without current
+def dfs root, target
+  nodes = [root]
+
+  until nodes.empty?
+    current = nodes.pop
+    return current if current.value == target
+
+    nodes += current.children.reverse
   end
 
   nil
@@ -93,8 +111,6 @@ def inorder root
   result
 end
 
-require 'set'
-
 # without current
 def inorder root
   result = []
@@ -116,6 +132,8 @@ def inorder root
 
   result
 end
+
+require 'set'
 
 # with visited set, add all children
 def inorder root
