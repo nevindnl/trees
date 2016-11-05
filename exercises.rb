@@ -5,9 +5,6 @@ end
 def symmetric? root
 end
 
-def traversal
-end
-
 def lca node1, node2
 end
 
@@ -46,4 +43,125 @@ def has_path_sum? root, sum
   end
 
   false
+end
+
+
+# (binary)
+def dfs root, target
+  return root if root.value == target
+
+  dfs(root.left) || dfs(root.right)
+end
+
+def dfs root, target
+  nodes = []
+  current = root
+
+  until nodes.empty?
+    if current
+      return current if current.value == target
+
+      nodes << current
+      current = current.left
+    else
+      current = nodes.pop
+      current = current.right
+    end
+  end
+
+  nil
+end
+
+
+# with current
+def inorder root
+  result = []
+  nodes = []
+  current = root
+
+  until nodes.empty? && current.nil?
+    if current
+      nodes << current
+      current = current.left
+    else
+      current = nodes.pop
+      result << current
+      current = current.right
+    end
+  end
+
+  result
+end
+
+require 'set'
+
+# without current
+def inorder root
+  result = []
+  nodes = [root]
+
+  until nodes.empty?
+    current = nodes.last
+
+    if current
+      nodes << current.left
+    else
+      nodes.pop
+
+      current = nodes.pop
+      result << current
+      nodes << current.right
+    end
+  end
+
+  result
+end
+
+# with visited set, add all children
+def inorder root
+  result = []
+  nodes = [root]
+  visited = Set.new
+
+  until nodes.empty?
+    current = nodes.last
+
+    if visited.include? current
+      result << current
+      nodes.pop
+    else
+      visited << current
+      nodes += current.children.reverse
+    end
+  end
+
+  result
+end
+
+def preorder root
+  result = []
+  nodes = [root]
+
+  until nodes.empty?
+    current = nodes.pop
+    result << current
+
+    nodes += current.children.reverse
+  end
+
+  result
+end
+
+def postorder root
+  result = []
+  nodes = [root]
+
+  until nodes.empty?
+    current = nodes.pop
+    result.shift(current)
+
+    nodes += current.children
+  end
+
+  result
 end
