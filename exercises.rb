@@ -186,6 +186,3 @@ end
 
 
 # 2 pointers for O(1) space (with parent metadata)
-
-
-# add metadata
