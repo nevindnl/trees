@@ -51,7 +51,7 @@ end
 # dfs is preorder traversal
 
 def dfs root, target
-  return root if root.value == target
+  return root if root.value == target || root.nil?
 
   dfs(root.left) || dfs(root.right)
 end
@@ -184,4 +184,8 @@ def postorder root
   result
 end
 
+
 # 2 pointers for O(1) space (with parent metadata)
+
+
+# add metadata
